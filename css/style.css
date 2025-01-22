@@ -1,0 +1,20 @@
+.navmenu > span {
+    background-color: aquamarine;
+    padding: 1em;
+    margin: 0;
+}
+
+.navmenu > span > a {
+    text-decoration: none;
+}
+
+.post {
+    background-color: azure;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 5px;
+}
+
+#id_posts {
+    padding: 10px;
+}
