@@ -22,7 +22,9 @@ function show_posts(room_id)
             console.log(post.id + ' ' + post.msg);
             let postDiv = document.createElement("div");
             postDiv.className = "post";
-            postDiv.innerHTML = post.msg;
+            postDiv.innerHTML = 
+                "<small>" + post.login + "</small><br/>"
+                + post.msg;
             allPostsDiv.appendChild(postDiv);
         }
 
