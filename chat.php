@@ -32,7 +32,11 @@ Toto prepise js
 </div>
 
 <script>
-show_posts(<?php echo $rooms_id ?>);
+function refreshPosts() {
+    show_posts(<?php echo $rooms_id ?>);
+}
+
+setInterval(refreshPosts, 5000);
 </script>
 
 
