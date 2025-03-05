@@ -10,6 +10,8 @@
                            - oprava connect_db();
     2024-12-04 - jmarianek - check_user() - pouziti md5();
                            - tr();
+
+                           // TODO insert_post(id, msg)
                         
 */
 

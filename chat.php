@@ -5,6 +5,8 @@
     2024-12-11 - jmarianek - v1;
     2025-01-15 - jmarianek - prispevky pres sluzbu 
                              service/get_posts.php;
+    2025-02-05 - jmarianek - obsluha submitu form. (nova zprava);
+                           - refresh po 5s;
     
     TODO - osetrit neprihlaseneho uziv.
 
@@ -20,11 +22,17 @@ require_once "funcs.php";
 
 <h1>Chat - vítejte v místnosti</h1>
 TODO - overit, ze uzivatel ma pravo na tuto mistnost<br/>
-TODO - submit form.<br/>
 
 <?php
 $rooms_id = $_GET["id"];
 echo "id=$rooms_id".BR;
+
+// obsluha submitu form. (nova zprava)
+if (isset($_POST["msg"])) {
+    // id mistnosti a obsah zpravy
+    insert_post($id, $_POST["msg"]);
+}
+
 ?>
 
 <div id="id_posts">
@@ -41,7 +49,7 @@ setInterval(refreshPosts, 5000);
 
 
 <form method="post">
-<textarea placeholder="Sem piste...">
+<textarea name="msg" placeholder="Sem piste...">
 </textarea>
 <button>Odeslat</button>
 </form>
