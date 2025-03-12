@@ -56,8 +56,9 @@ begin
     declare p_surname varchar(50);
     declare p_login varchar(20);
     declare p_role varchar(10);
-    select name, surname, login, role into p_name, p_surname,
-        p_login, p_role from users where id = p_id;
+    select IFNULL(name, ''), IFNULL(surname, ''),
+        login, role into p_name, p_surname, p_login, p_role
+        from users where id = p_id;
     return concat(p_name, ' ', p_surname, ', ', p_login, ' (', p_role, ')');
 end$$
 
