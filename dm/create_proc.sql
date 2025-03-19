@@ -1,5 +1,5 @@
 -- procedury pro chat
--- verze 2025-03-12
+-- verze 2025-03-19
 
 USE `chat`;
 DROP procedure IF EXISTS `add_user`;
@@ -84,3 +84,30 @@ select @user_id;
 -- 16
 
 
+
+
+
+DELIMITER $$
+-- funkce vracejici pocet uzivatelu
+create procedure ins_users(p_user_count INT)
+begin
+    -- TODO insert daneho poctu uziv. 
+    -- login 'userX', heslo md5(12345)
+    DECLARE v INT;
+    declare last_id int;
+    -- ziskat id posl. uzivatele
+    select max(id) into last_id from users;
+    
+    SET v = 0;
+    set last_id = last_id + 1;
+    WHILE v < p_user_count DO
+        INSERT INTO users(login, passwd)
+        VALUES (concat('user', last_id), md5('12345') );
+        SET v = v + 1;
+        set last_id = last_id + 1;
+  END WHILE;
+end$$
+
+delimiter ;
+
+call ins_users(2);
