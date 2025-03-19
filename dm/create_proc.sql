@@ -111,3 +111,42 @@ end$$
 delimiter ;
 
 call ins_users(2);
+
+
+
+DELIMITER $$
+-- trigger, ktery pri update passwd tab. users 
+-- provede zalohu predch. hesla do noveho sloupce prev_passwd
+-- jen v pripade, ze se nove a stare heslo lisi
+create trigger users_bu_trig
+before update on users
+FOR EACH ROW 
+begin
+    if old.passwd -- stare heslo v tabulce
+       <> new.passwd -- nove nastavovane heslo
+    then
+        -- prev_passwd je sloupec pro zalohu predch. hesla
+        set new.prev_passwd = old.passwd;
+    end if;
+end$$
+
+delimiter ;
+
+SELECT passwd, prev_passwd FROM chat.users 
+where id = 18;
+-- 827...., null
+
+update users set passwd = md5('45678') where id = 18;
+
+SELECT passwd, prev_passwd FROM chat.users 
+where id = 18;
+-- c4...., 827....
+
+update users set name = 'Petr' where id = 18;
+
+SELECT passwd, prev_passwd FROM chat.users 
+where id = 18;
+-- c4...., 827.... OK
+
+
+

@@ -19,6 +19,7 @@ Changelog:
 2024-12-11 - jmarianek - DB uzivatel web;
                        - trigger user_created before insert;
                        - view_posts pridano rooms_id;
+2025-03-19 - jmarianek - users.prev_passwd;                       
 */
 
 -- -----------------------------------------------------
@@ -113,6 +114,10 @@ show index from users;
 -- 2024-12-04 zm. hesla z 20 na 32zn.
 alter table users
 modify passwd VARCHAR(32) NOT NULL;
+
+-- 2025-03-19 - novy. sl. prev_passwd pro zalohu predch. hesla
+alter table users
+add prev_passwd VARCHAR(20);
 
 
 -- trigger before users created
