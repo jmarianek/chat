@@ -118,6 +118,9 @@ modify passwd VARCHAR(32) NOT NULL;
 -- 2025-03-19 - novy. sl. prev_passwd pro zalohu predch. hesla
 alter table users
 add prev_passwd VARCHAR(20);
+alter table users
+modify prev_passwd VARCHAR(32);
+
 
 
 -- trigger before users created
