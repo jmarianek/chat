@@ -44,22 +44,24 @@ function connect_db()
  * @param $user_data Obsahuje $_POST[] odesl. formulare.
  * @return Hodnota true - ok, false - chyba.
  */
-function insert_user($user_data)
-{
+function insert_user($user_data) {
     $con = connect_db();
-    // osetrime potencialne nebezpecne uziv. vstupy
-    $login = mysqli_real_escape_string($con,
-        $user_data["login"]);
-    $passwd = mysqli_real_escape_string($con,
-        $user_data["passwd"]);
 
-    $sql = "insert into users(login, passwd)\n"
-          ."values('".$login."', '"
-                     .$passwd."')";
-    echo BR.$sql;
-    if (mysqli_query($con, $sql)) {
+    $login = $user_data["login"];
+    $passwd = md5($user_data["passwd"]);
+    $name = $user_data["name"];
+    $surname = $user_data["surname"];
+
+    $sql = "INSERT INTO users(login, passwd, name, surname)\n"
+          ."VALUES(?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "ssss", $login, $passwd, $name, $surname);
+
+    if (mysqli_stmt_execute($stmt)) {
         return true;
     }
+
     return false;
 }
 
@@ -176,17 +178,26 @@ function get_user_id($login)
 
 
 
-function is_admin($login)
-{
+function is_admin($login) {
     // ziskame spojeni do DB
     $con = connect_db();
     // zjistime jestli sedi login a heslo
-    $sql = "select id from users where "
-          ."login = '$login' "
-          ."and role = 'admin'";
+    $sql = "SELECT id FROM users WHERE "
+          ."login = ? "
+          ."AND role = 'admin'";
+
     // pokud zaznam najdeme, pak je to admin
-    $sqlstat = mysqli_query($con, $sql);
-    if (mysqli_fetch_assoc($sqlstat)) {
+    $stmt = mysqli_prepare($con, $sql);
+    $stmt->bind_param('s', $login);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if (!$result) {
+        echo "Chyba: ".mysqli_error($con).BR;
+        exit;
+    }
+
+    if (mysqli_fetch_assoc($result)) {
         // vracen zaznam
         return true;
     }
@@ -207,6 +218,17 @@ function tr($arr)
         echo "<td>".$cell."</td>";
     }
     echo "</tr>\n";
+}
+
+function yes_no_to_bool($var) {
+    switch ($var) {
+        case "Y":
+            return true;
+            break;
+        case "N":
+            return false;
+            break;
+    }
 }
 
 

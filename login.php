@@ -40,7 +40,7 @@ if (isset($_POST["login"]) && check_user($_POST))
     // dotahneme roli uzivatele z DB
     $_SESSION["admin"] = is_admin($_POST["login"]); 
     echo "<script>location.href='index.php'</script>";
-} else {
+} elseif (isset($_POST["login"])) {
     echo "Neuspesne prihlaseni".BR;
 }
 
