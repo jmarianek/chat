@@ -9,11 +9,6 @@
 
 */
 ?>
-<script>
-$(document).ready(function() {
-    $("table").dataTable();
-});
-</script>
 
 <?php
 require_once "layout/header.php";
@@ -50,9 +45,9 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
 
 
 // pokud nejde o admina, pak chybove hlaseni a exit
-if ($_SESSION["admin"] != true) {
-    echo "Nejste admin".BR;
-    exit;
+if (isset($_SESSION["admin"]) == false or $_SESSION["admin"] != true) {
+    echo "Stránka dostupná pouze pro adminy";
+    exit();
 }
 
 
@@ -62,7 +57,7 @@ $con = mysqli_connect($server, $login, $passwd, $schema);
 // kontrola pripojeni k DB
 if (!$con) {
     echo "Chyba:".mysqli_error($con).BR;
-    exit; // ukonceni vykonavani skriptu php
+    exit(); // ukonceni vykonavani skriptu php
 }
 
 // SQL dotaz na vsechny uzivatele
@@ -71,7 +66,7 @@ $sql = "SELECT id, login, role, name, surname from USERS";
 $result = mysqli_query($con, $sql);
 if (!$result) {
     echo "Chyba:".mysqli_error($con).BR;
-    exit; // ukonceni vykonavani skriptu php
+    exit(); // ukonceni vykonavani skriptu php
 }
 
 // prevzeti vracenych zaznamu
@@ -92,7 +87,11 @@ mysqli_close($con);
 
 ?>
 
-
+<script>
+$(document).ready(function() {
+    $("table").dataTable();
+});
+</script>
 
 
 <?php
