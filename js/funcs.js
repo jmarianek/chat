@@ -17,7 +17,7 @@ function show_posts(room_id)
 
         console.log(data);
         
-        //allPostsDiv.innerHTML = "";
+        allPostsDiv.innerHTML = "";
         for (let post of data) {
             console.log(post.id + ' ' + post.msg);
             let postDiv = document.createElement("div");

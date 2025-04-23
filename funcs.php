@@ -10,8 +10,8 @@
                            - oprava connect_db();
     2024-12-04 - jmarianek - check_user() - pouziti md5();
                            - tr();
-
-                           // TODO insert_post(id, msg)
+    2025-04-09 - jmarianek - insert_post(id, msg);
+                           - get_user_id();
                         
 */
 
@@ -34,6 +34,10 @@ function connect_db()
 
     return $con;
 }
+
+
+
+
 
 /**
  * Vlozi do DB predaneho uzivatele.
@@ -85,6 +89,37 @@ function insert_user2($user_data)
 }
 
 
+/**
+ * Vlozi zpravu do dane mistnosti.
+ * Vezme se id prihlaseneho uzivatele.
+ * @param room_id Id mistnosti
+ * @param msg Obsah zpravy
+ * @return True ok, false chyba.
+ */
+function insert_post($room_id, $msg)
+{
+    // kontrola ze je uziv. prihlasen
+    if (!$_SESSION["logged_in"]) return false;
+
+    $user_id = get_user_id($_SESSION["login"]);
+
+    $con = connect_db();
+    // osetrime potencialne nebezpecne uziv. vstupy
+    // pomoci prepared statement
+    
+    $sql = "insert into posts(users_id, rooms_id, msg)\n"
+          ."values(?, ?, ?)";
+    echo BR."$user_id, $room_id, $msg";
+    echo BR.$sql;
+
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "iis",
+        $user_id, $room_id, $msg);
+    if (mysqli_stmt_execute($stmt)) {
+        return true;
+    }
+    return false;
+}
 
 
 
@@ -114,6 +149,31 @@ function check_user($user_data)
 
     return false;
 }
+
+
+
+
+
+/**
+ * Pro login vrati id uzivatele
+ */
+function get_user_id($login)
+{
+    // ziskame spojeni do DB
+    $con = connect_db();    
+    $sql = "select id from users where login = '"
+          .mysqli_real_escape_string($con, $login)."'";
+    $sqlstat = mysqli_query($con, $sql);
+    if ($row = mysqli_fetch_assoc($sqlstat)) {
+        // vracen zaznam
+        return $row["id"];
+    }
+
+}
+
+
+
+
 
 
 function is_admin($login)

@@ -1,8 +1,8 @@
 <?php
 // konfigurace pripojeni k DB
 $server = "localhost";
-$login = "web";
-$passwd = "12345";
+$login = "root";
+$passwd = "root";
 $schema = "chat";
 
 ?>

@@ -30,7 +30,7 @@ echo "id=$rooms_id".BR;
 // obsluha submitu form. (nova zprava)
 if (isset($_POST["msg"])) {
     // id mistnosti a obsah zpravy
-    insert_post($id, $_POST["msg"]);
+    insert_post($rooms_id, $_POST["msg"]);
 }
 
 ?>
