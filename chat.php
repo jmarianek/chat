@@ -45,6 +45,10 @@ function refreshPosts() {
 }
 
 setInterval(refreshPosts, 5000);
+
+$(document).ready(function() {
+    refreshPosts();
+});
 </script>
 
 

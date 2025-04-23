@@ -109,8 +109,8 @@ function insert_post($room_id, $msg)
     
     $sql = "insert into posts(users_id, rooms_id, msg)\n"
           ."values(?, ?, ?)";
-    echo BR."$user_id, $room_id, $msg";
-    echo BR.$sql;
+    //echo BR."$user_id, $room_id, $msg";
+    //echo BR.$sql;
 
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param($stmt, "iis",
