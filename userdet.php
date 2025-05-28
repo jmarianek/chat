@@ -13,7 +13,7 @@ require_once "dbcfg.php";
 require_once "funcs.php";
 
 // pokud nejde o admina, pak chybove hlaseni a exit
-if ($_SESSION["admin"] != true) {
+if (!is_admin()) {
     echo "Nejste admin".BR;
     exit;
 }

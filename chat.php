@@ -44,6 +44,7 @@ function refreshPosts() {
     show_posts(<?php echo $rooms_id ?>);
 }
 
+refreshPosts();
 setInterval(refreshPosts, 5000);
 </script>
 

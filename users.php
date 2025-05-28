@@ -39,13 +39,13 @@ TODO - administrace uzivatelu, jen pro admina<br/>
 <?php
 
 // zobrazime informaci o prihl. uzivateli
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
+if (is_logged_in()) {
    echo "Přihlášen: ".$_SESSION["login"].BR.BR;
 }
 
 
 // pokud nejde o admina, pak chybove hlaseni a exit
-if (isset($_SESSION["admin"]) == false or $_SESSION["admin"] != true) {
+if (!is_admin()) {
     echo "Stránka dostupná pouze pro adminy";
     exit();
 }

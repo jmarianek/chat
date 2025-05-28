@@ -2,6 +2,8 @@
 // zahajime session - pro vsechny stranky pouzivajici
 // header.php
 session_start();
+
+require_once "funcs.php";
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +21,12 @@ session_start();
 <body>
     
 <!-- navigacni menu -->
-<div class="navmenu">
+<header class="navmenu">
 <span><a href="users.php">Uživatelé</a></span>
 <span><a href="rooms.php">Místnosti</a></span>
 
 <?php
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
+if (is_logged_in()) {
     // uzivatel je prihlasen
     echo "<span>".$_SESSION["login"].' ';
     // odkaz pro odhlaseni, pouzije session_destroy(); 
@@ -36,4 +38,4 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {
 
 ?>
 
-</div>
+</header>

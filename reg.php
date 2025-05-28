@@ -19,7 +19,7 @@ require_once "funcs.php"; // pomocne funkce
 // kde nazev pole je atr. name
 if (isset($_POST["login"])) {
     echo "Formular odeslan, login=".$_POST["login"];
-    if (insert_user2($_POST)) {
+    if (insert_user($_POST)) {
         echo "Uživatel úspěšně založen.".BR;
     } else {
         echo "Uživatele se nepovedlo založit.".BR;

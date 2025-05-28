@@ -1,4 +1,11 @@
+.navmenu {
+    display: flex;
+    overflow: hidden;
+}
+
 .navmenu > span {
+    text-align: center;
+    text-decoration: none;
     background-color: aquamarine;
     padding: 1em;
     margin: 0;
@@ -6,6 +13,16 @@
 
 .navmenu > span > a {
     text-decoration: none;
+}
+
+@media screen and (max-width: 750px) {
+    .navmenu {
+        flex-direction: column;
+    }
+
+    .navmenu > span {
+        width: 100%;
+    }
 }
 
 .post {

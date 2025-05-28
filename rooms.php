@@ -29,7 +29,7 @@ from rooms
 where public = 'Y'
 "
 // pokud prihlasen pridame i neverejne
-.(isset($_SESSION["logged_in"]) ? " or public = 'N'" : "");
+.(is_logged_in() ? " or public = 'N'" : "");
 
 // pripojeni k DB
 $con = connect_db();

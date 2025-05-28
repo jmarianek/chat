@@ -35,10 +35,10 @@ require_once "funcs.php";
 if (isset($_POST["login"]) && check_user($_POST))
 {
     // uspesne prihlaseni
-    $_SESSION["logged_in"] = true;
+    // $_SESSION["logged_in"] = true;
     $_SESSION["login"] = $_POST["login"]; 
     // dotahneme roli uzivatele z DB
-    $_SESSION["admin"] = is_admin($_POST["login"]); 
+    // $_SESSION["admin"] = is_admin($_POST["login"]);
     echo "<script>location.href='index.php'</script>";
 } elseif (isset($_POST["login"])) {
     echo "Neuspesne prihlaseni".BR;

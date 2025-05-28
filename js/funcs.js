@@ -14,12 +14,9 @@ function show_posts(room_id)
     {
         // zakomentovano - jQuery provedl parsovani interne
         //let posts = JSON.parse(data);
-
-        console.log(data);
         
         allPostsDiv.innerHTML = "";
         for (let post of data) {
-            console.log(post.id + ' ' + post.msg);
             let postDiv = document.createElement("div");
             postDiv.className = "post";
             postDiv.innerHTML = 
