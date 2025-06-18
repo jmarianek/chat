@@ -19,7 +19,6 @@ require_once "../funcs.php";
 // TODO: sort posts by date
 
 
-// TODO - vratit JSON z dat v DB
 $rooms_id = $_GET["rooms_id"];
 $sql = "
 select id, login, msg, rooms_id

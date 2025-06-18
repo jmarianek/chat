@@ -24,36 +24,43 @@ require_once "funcs.php";
 TODO - overit, ze uzivatel ma pravo na tuto mistnost<br/>
 
 <?php
-$rooms_id = $_GET["id"];
-echo "id=$rooms_id".BR;
+$room_id = $_GET["id"];
+echo "id=$room_id".BR;
+
+// zjistit zdali mistnost existuje
+if (!room_exists($room_id)) {
+    echo "Mistnost neexistuje";
+    exit();
+}
 
 // obsluha submitu form. (nova zprava)
 if (isset($_POST["msg"])) {
     // id mistnosti a obsah zpravy
-    insert_post($rooms_id, $_POST["msg"]);
+    insert_post($room_id, $_POST["msg"]);
 }
 
 ?>
 
-<div id="id_posts">
-Toto prepise js
+<div id="flex-container">
+    <div id="posts">
+    Nacitani prispevku...
+    </div>
+
+    <script>
+    function refreshPosts() {
+        show_posts(<?php echo $room_id ?>);
+    }
+
+    refreshPosts();
+    setInterval(refreshPosts, 5000);
+    </script>
+
+
+    <form method="post" id="post-form">
+        <textarea name="msg" placeholder="Sem piste..."></textarea>
+        <button>Odeslat</button>
+    </form>
 </div>
-
-<script>
-function refreshPosts() {
-    show_posts(<?php echo $rooms_id ?>);
-}
-
-refreshPosts();
-setInterval(refreshPosts, 5000);
-</script>
-
-
-<form method="post">
-<textarea name="msg" placeholder="Sem piste...">
-</textarea>
-<button>Odeslat</button>
-</form>
 
 <?php
 require_once "layout/footer.php";

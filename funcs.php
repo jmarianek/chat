@@ -73,6 +73,9 @@ function insert_post($room_id, $msg) {
     // kontrola ze je uziv. prihlasen
     if (!is_logged_in()) return false;
 
+    // kontrola ze mistnost existuje
+    if (!room_exists($room_id)) return false;
+
     $user_id = get_user_id($_SESSION["login"]);
 
     $con = connect_db();
@@ -191,6 +194,32 @@ function is_admin() {
 
     $stmt = mysqli_prepare($con, $sql);
     $stmt->bind_param('s', $login);
+    $stmt->execute();
+
+    // pokud zaznam najdeme, pak je to admin
+    $result = $stmt->get_result();
+    if (!$result) {
+        // chyba
+        exit;
+    }
+
+    if (mysqli_fetch_assoc($result)) {
+        // vracen zaznam
+        return true;
+    }
+
+    return false;
+}
+
+
+function room_exists($room_id) {
+    $con = connect_db();
+
+    $sql = "SELECT id FROM rooms WHERE "
+          ."id = ?";
+
+    $stmt = mysqli_prepare($con, $sql);
+    $stmt->bind_param('i', $room_id);
     $stmt->execute();
 
     // pokud zaznam najdeme, pak je to admin
